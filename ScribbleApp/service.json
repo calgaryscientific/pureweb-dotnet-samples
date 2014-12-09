@@ -1,0 +1,12 @@
+[
+ {
+    "Name": "ScribbleApp",
+    "Description": "Scribble App .NET",
+    "Executable": "./ScribbleApp.exe",
+    "Directory": "../apps/ScribbleApp",
+    "Arguments": ["127.0.0.1", "8085"],
+    "Environment": [],
+    "AllowMultipleConnections": false,
+    "StartupInstances": 0
+  }
+]
