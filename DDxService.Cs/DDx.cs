@@ -50,7 +50,7 @@ namespace DDxServiceCs
 
         public void Go(string[] args)
         {
-            m_stateManager = new StateManager("DDxServiceCs", System.Windows.Threading.Dispatcher.CurrentDispatcher);
+            m_stateManager = new StateManager(System.Windows.Threading.Dispatcher.CurrentDispatcher);
             m_stateManagerServer = new StateManagerServer();
 
             m_stateManager.Initialized += new EventHandler(OnPureWebStartup);

@@ -19,7 +19,7 @@ namespace ScribbleApp
         [STAThread]
         static void Main(string[] args)
         {
-            StateManager = new PureWeb.Server.StateManager("ScribbleApp", Dispatcher.CurrentDispatcher);
+            StateManager = new PureWeb.Server.StateManager(Dispatcher.CurrentDispatcher);
             StateManager.Uninitialized += new EventHandler(StateManager_Uninitialized);
             
             StateManagerServer server = new StateManagerServer();
