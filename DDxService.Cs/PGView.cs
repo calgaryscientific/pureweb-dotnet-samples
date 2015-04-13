@@ -61,7 +61,7 @@ namespace DDxServiceCs
         {
             m_viewName = "PGView";
             m_remoteRenderer = stateManager.ViewManager;
-            stateManager.ViewManager.RegisterView(m_viewName,this);
+            stateManager.ViewManager.RegisterView(m_viewName, this, new ViewRegistrationOptions(true, true));
             stateManager.ViewManager.SetViewImageFormat(m_viewName, new ViewImageFormat() { PixelFormat = PIXEL_FORMAT });        
 
             StateManager.Instance.XmlStateManager.AddValueChangedHandler(DDx._DDx_ASYNCIMAGEGENERATION, OnAsyncImageGenerationChanged);
