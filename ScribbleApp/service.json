@@ -1,6 +1,6 @@
 [
  {
-    "Name": "ScribbleApp",
+    "Name": "ScribbleCs",
     "Description": "Scribble App .NET",
     "Executable": "./ScribbleApp.exe",
     "Directory": "../apps/ScribbleApp",
