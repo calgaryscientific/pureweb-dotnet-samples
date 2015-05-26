@@ -1,6 +1,6 @@
 [
  {
-    "Name": "DDxServiceCs",
+    "Name": "DDxCs",
     "Description": "DDxService .NET",
     "Executable": "./DDxServiceCs.exe",
     "Directory": "../apps/DDxServiceCs",
