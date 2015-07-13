@@ -8,6 +8,6 @@
     "Environment": [],
     "AllowMultipleConnections": false,
     "StartupInstances": 0,
-    "ClientUrl" : "localhost%3A2001%2FScribbleClient%3Fname%3DScribbleCs%26_diagnostics%3Dtrue"
+    "ClientUrl" : "localhost:2001/ScribbleClient?name=ScribbleCs&_diagnostics=true"
   }
 ]
