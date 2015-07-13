@@ -7,6 +7,7 @@
     "Arguments": ["127.0.0.1", "9210"],
     "Environment": [],
     "AllowMultipleConnections": false,
-    "StartupInstances": 0
+    "StartupInstances": 0,
+    "ClientUrl" : "localhost:2001/ScribbleClient?name=ScribbleCs&_diagnostics=true"
   }
 ]
