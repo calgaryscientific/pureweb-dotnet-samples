@@ -7,6 +7,7 @@
     "Arguments": ["127.0.0.1", "9210"],
     "Environment": [],
     "AllowMultipleConnections": false,
-    "StartupInstances": 0
+    "StartupInstances": 0,
+    "ClientUrl" : "localhost%3A2001%2FDDxClient%3Fname%3DDDxCs%26_diagnostics%3Dtrue"
   }
 ]
