@@ -4,7 +4,7 @@
     "Description": "DDxService .NET",
     "Executable": "./DDxServiceCs.exe",
     "Directory": "../apps/DDxServiceCs",
-    "Arguments": ["127.0.0.1", "9210"],
+    "Arguments": [],
     "Environment": [],
     "AllowMultipleConnections": false,
     "StartupInstances": 0,
