@@ -144,5 +144,11 @@ namespace DDxServiceCs
         {
             m_remoteRenderer.RenderViewDeferred(m_viewName);
         }
+
+        public int BkColorIndex
+        {
+            get { return m_colorIndex; }
+            set { m_colorIndex = value; }
+        }
     }
 }
