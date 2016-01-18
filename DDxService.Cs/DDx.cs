@@ -90,6 +90,7 @@ namespace DDxServiceCs
             m_stateManager.CommandManager.AddUiHandler("SetProperty", OnSetProperty);
             m_stateManager.CommandManager.AddUiHandler("Echo", OnEcho);
             m_stateManager.CommandManager.AddIoHandler("TestMerge", OnTestMerge);
+            m_stateManager.CommandManager.AddUiHandler("RotateDDxViewBkColors", OnRotateDDxViewBkColors);
             m_stateManager.XmlStateManager.AddChildChangedHandler(_DDx_GRID, OnGridStateChanged);
             m_stateManager.XmlStateManager.AddChildChangedHandler("/PureWeb/Profiler", OnProfilerStateChanged);
 
@@ -157,6 +158,7 @@ namespace DDxServiceCs
             m_stateManager.CommandManager.RemoveUiHandler("SetProperty");
             m_stateManager.CommandManager.RemoveUiHandler("Echo");
             m_stateManager.CommandManager.RemoveUiHandler("TestMerge");
+            m_stateManager.CommandManager.RemoveUiHandler("RotateDDxViewBkColors");
 
             m_colorCount = 0; // default color provider reset
             DDxView.m_colorCount = 0; // reset DDxView colors
@@ -304,6 +306,45 @@ namespace DDxServiceCs
 
             responses.Add(new XElement("Key", key));
             responses.Add(new XElement("Content", content));
+        }
+
+        private void OnRotateDDxViewBkColors(Guid sessionId, XElement command, XElement responses)
+        {
+            Logger.Debug("Unregistering DDx Views");
+
+            StateManager stateManager = PureWeb.Server.StateManager.Instance;
+
+            for (int i = 0; i < m_viewCount; i++)
+            {
+                stateManager.ViewManager.UnregisterView(m_views[i].m_viewName);
+            }
+
+            Logger.Debug("Rotating DDx Views background colors");
+
+            // rotate the view background colors - this has the effect of a clockwise rotation
+            // (mod 4) of the view background colors in the HTML5 client so the first time this
+            // command is invoked we get:
+            //
+            // |-------------------|         |--------------------|
+            // | black  | blue     |         | magenta | black    |
+            // |-------------------| goes to |--------------------|
+            // | green  | magenta  |         | blue    | green    |
+            // |-------------------|         |--------------------|
+
+            int bkColorIndex = m_views[m_viewCount - 1].BkColorIndex;
+            for (int i = m_viewCount - 1; i > 0; i--)
+            {
+                m_views[i].BkColorIndex = m_views[i - 1].BkColorIndex;
+            }
+            m_views[0].BkColorIndex = bkColorIndex;
+
+            Logger.Debug("Re-registering DDx Views");
+
+            for (int i = 0; i < m_viewCount; i++)
+            {
+                stateManager.ViewManager.RegisterView(m_views[i].m_viewName, m_views[i]);
+                m_views[i].RenderDeferred();
+            }
         }
     }
 }
