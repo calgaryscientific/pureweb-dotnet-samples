@@ -10,8 +10,7 @@ using log4net;
 using System.Xml;
 using System.Xml.Linq;
 using System.Drawing;
-using System.Collections.Generic;
-using PureWeb.Ui;
+using System.Text;
 
 namespace DDxServiceCs
 {
@@ -91,6 +90,11 @@ namespace DDxServiceCs
             m_stateManager.CommandManager.AddUiHandler("Echo", OnEcho);
             m_stateManager.CommandManager.AddIoHandler("TestMerge", OnTestMerge);
             m_stateManager.CommandManager.AddUiHandler("RotateDDxViewBkColors", OnRotateDDxViewBkColors);
+            m_stateManager.CommandManager.AddUiHandler("SessionStorageBroadcast", OnSessionStorageBroadcast);
+            m_stateManager.CommandManager.AddUiHandler("AttachStorageListener", OnAttachStorageListener);
+            m_stateManager.CommandManager.AddUiHandler("DetachStorageListener", OnDetachStorageListener);
+            m_stateManager.CommandManager.AddUiHandler("QuerySessionStorageKeys", OnQuerySessionStorageKeys);
+            m_stateManager.CommandManager.AddUiHandler("QuerySessionsWithKey", OnQuerySessionsWithKey);
             m_stateManager.XmlStateManager.AddChildChangedHandler(_DDx_GRID, OnGridStateChanged);
             m_stateManager.XmlStateManager.AddChildChangedHandler("/PureWeb/Profiler", OnProfilerStateChanged);
 
@@ -159,6 +163,11 @@ namespace DDxServiceCs
             m_stateManager.CommandManager.RemoveUiHandler("Echo");
             m_stateManager.CommandManager.RemoveUiHandler("TestMerge");
             m_stateManager.CommandManager.RemoveUiHandler("RotateDDxViewBkColors");
+            m_stateManager.CommandManager.RemoveUiHandler("SessionStorageBroadcast");
+            m_stateManager.CommandManager.RemoveUiHandler("AttachStorageListener");
+            m_stateManager.CommandManager.RemoveUiHandler("DetachStorageListener");
+            m_stateManager.CommandManager.RemoveUiHandler("QuerySessionStorageKeys");
+            m_stateManager.CommandManager.RemoveUiHandler("QuerySessionsWithKey");
 
             m_colorCount = 0; // default color provider reset
             DDxView.m_colorCount = 0; // reset DDxView colors
@@ -345,6 +354,62 @@ namespace DDxServiceCs
                 stateManager.ViewManager.RegisterView(m_views[i].m_viewName, m_views[i]);
                 m_views[i].RenderDeferred();
             }
+        }
+
+                private void OnSessionStorageValueChanged(Object source, SessionStorageChangedEventArgs args)
+        {
+            if (args.ChangeType == SessionStorageChangeType.Set)
+            {
+                var key = "ServiceListenerReverser-" + args.Key;
+                var builder = new StringBuilder(args.NewValue.Length);
+                for (var i = args.NewValue.Length - 1; i >= 0; i--)
+                {
+                    builder.Append(args.NewValue[i]);
+                }
+                m_stateManager.SessionStorageManager.SetValue(args.SessionId, key, builder.ToString());
+            }
+        }
+
+        private void OnSessionStorageBroadcast(Guid sessionId, XElement command, XElement responses)
+        {
+            var key = command.GetText("/key");
+            var value = command.GetText("/value");
+            m_stateManager.SessionStorageManager.SetValueForAllSessions(key, value);
+        }
+
+        private void OnAttachStorageListener(Guid sessionId, XElement command, XElement responses)
+        {
+            var key = command.GetText("/key");
+            m_stateManager.SessionStorageManager.AddValueChangedHandler(sessionId, key, OnSessionStorageValueChanged);
+        }
+
+        private void OnDetachStorageListener(Guid sessionId, XElement command, XElement responses)
+        {
+            var key = command.GetText("/key");
+            m_stateManager.SessionStorageManager.RemoveValueChangedHandler(sessionId, key, OnSessionStorageValueChanged);
+        }
+
+        private void OnQuerySessionStorageKeys(Guid sessionId, XElement command, XElement responses)
+        {
+            var keys = m_stateManager.SessionStorageManager.GetKeys(sessionId);
+            var keyStr ="";
+
+            foreach (var key in keys)
+                keyStr += key + ";";
+            
+            responses.SetText("/keys", keyStr);
+        }
+
+        private void OnQuerySessionsWithKey(Guid sessionId, XElement command, XElement responses)
+        {
+            var key = command.GetText("/key");
+            var sessionIds = m_stateManager.SessionStorageManager.GetSessionsContainingKey(key);
+            var keyStr ="";
+
+            foreach (var id in sessionIds)
+                keyStr += id.ToString() + ";";
+            
+            responses.SetText("/guids", keyStr);
         }
     }
 }
