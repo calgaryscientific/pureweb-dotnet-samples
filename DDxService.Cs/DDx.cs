@@ -95,6 +95,7 @@ namespace DDxServiceCs
             m_stateManager.CommandManager.AddUiHandler("DetachStorageListener", OnDetachStorageListener);
             m_stateManager.CommandManager.AddUiHandler("QuerySessionStorageKeys", OnQuerySessionStorageKeys);
             m_stateManager.CommandManager.AddUiHandler("QuerySessionsWithKey", OnQuerySessionsWithKey);
+            m_stateManager.CommandManager.AddUiHandler("SessionStorageSetKeyForceResponse", OnSessionStorageSetKeyForceResponse);
             m_stateManager.XmlStateManager.AddChildChangedHandler(_DDx_GRID, OnGridStateChanged);
             m_stateManager.XmlStateManager.AddChildChangedHandler("/PureWeb/Profiler", OnProfilerStateChanged);
 
@@ -168,6 +169,7 @@ namespace DDxServiceCs
             m_stateManager.CommandManager.RemoveUiHandler("DetachStorageListener");
             m_stateManager.CommandManager.RemoveUiHandler("QuerySessionStorageKeys");
             m_stateManager.CommandManager.RemoveUiHandler("QuerySessionsWithKey");
+            m_stateManager.CommandManager.RemoveUiHandler("SessionStorageSetKeyForceResponse");
 
             m_colorCount = 0; // default color provider reset
             DDxView.m_colorCount = 0; // reset DDxView colors
@@ -410,6 +412,13 @@ namespace DDxServiceCs
                 keyStr += id.ToString() + ";";
             
             responses.SetText("/guids", keyStr);
+        }
+
+        private void OnSessionStorageSetKeyForceResponse(Guid sessionId, XElement command, XElement response)
+        {
+            var key = command.GetText("/key");
+            var value = command.GetText("/value");
+            m_stateManager.SessionStorageManager.SetValue(sessionId, key, value, true);
         }
     }
 }
