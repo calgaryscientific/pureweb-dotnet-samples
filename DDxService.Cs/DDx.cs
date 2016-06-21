@@ -358,18 +358,47 @@ namespace DDxServiceCs
             }
         }
 
-                private void OnSessionStorageValueChanged(Object source, SessionStorageChangedEventArgs args)
+        private void OnSessionStorageValueChanged(Object source, SessionStorageChangedEventArgs args)
         {
             if (args.ChangeType == SessionStorageChangeType.Set)
             {
                 var key = "ServiceListenerReverser-" + args.Key;
-                var builder = new StringBuilder(args.NewValue.Length);
-                for (var i = args.NewValue.Length - 1; i >= 0; i--)
-                {
-                    builder.Append(args.NewValue[i]);
-                }
-                m_stateManager.SessionStorageManager.SetValue(args.SessionId, key, builder.ToString());
+                m_stateManager.SessionStorageManager.SetValue(args.SessionId, key, Reverse(args.NewValue));
             }
+        }
+
+        // reversing a string in C# turns out to be tricky if one wants to support characters
+        // encoded as UTF-16 surrogate pairs - cant swap the order of them without ending up
+        // with invalid Unicode. The following is adapted from:
+        // http://stackoverflow.com/questions/228038/best-way-to-reverse-a-string#228460
+
+        private string Reverse(string input)
+        {
+            var output = new char[input.Length];
+            for (int outputIndex = 0, inputIndex = input.Length - 1;
+                outputIndex < input.Length;
+                outputIndex++, inputIndex--)
+            {
+                // check for surrogate pair
+                if (input[inputIndex] >= 0xDC00 &&
+                    input[inputIndex] <= 0xDFFF &&
+                    inputIndex > 0 &&
+                    input[inputIndex - 1] >= 0xD800 &&
+                    input[inputIndex - 1] <= 0xDBFF)
+                {
+                    // preserve the order of the surrogate pair code units
+                    output[outputIndex + 1] = input[inputIndex];
+                    output[outputIndex] = input[inputIndex - 1];
+                    outputIndex++;
+                    inputIndex--;
+                }
+                else
+                {
+                    output[outputIndex] = input[inputIndex];
+                }
+            }
+
+            return new string(output);
         }
 
         private void OnSessionStorageBroadcast(Guid sessionId, XElement command, XElement responses)
