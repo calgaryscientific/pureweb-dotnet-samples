@@ -2,8 +2,8 @@ require_relative("../../Rakefile-init")
 
 dir = File.dirname(__FILE__)
 projects = {
-    "DDxService.Cs" => ["./DDxService.Cs", "#{dir}\\DDx\\DDxService2010.sln"],
-    "ScribbleApp" => ["./ScribbleApp", "#{dir}\\Scribble\\ScribbleApp2010.sln"]
+    "DDxService.Cs" => ["./DDxService.Cs", "#{dir}\\DDxService.Cs\\DDxService.Cs.sln"],
+    "ScribbleApp" => ["./ScribbleApp", "#{dir}\\ScribbleApp\\ScribbleApp.NET.sln"]
 }
 ARCHIVE_PREFIX = "pureweb-sample-DotNet-service-"	
 
@@ -90,16 +90,8 @@ task :setup do
 	abort("Can't find valid devenv 2010 environment!") if !File.exists?("#{DEVENV2010}") 
 end
 
-desc "Build .Net Samples"
-task :build,[:variant] => [:setup] do |t, args|
-	t.invoke_in_scope('build_release_solo')
-end
-
-
 desc "Stage the .Net Samples into #{PUREWEB_HOME}"
-task :stage => [@stagedir] do |t|	
-	t.invoke_in_scope('build', 'release') # Staging is done by the DeployServer.bat Post-Build
-end
+task :stage => [:build_release_solo]	
 
 task :stageclean do	
 	FileUtils.rm_r PUREWEB_HOME + '/apps/DDxService.Cs', :force => true
@@ -118,17 +110,18 @@ task :clean,[:variant]  do |t, args|
     clean_debris
 end
 
-task :build_release => [:build_release_solo]
+task :build => [:build_release_solo]
 
 task :build_release_solo => [:setup] do	
-	sh("\"#{DEVENV2010}\" \"#{VS2010_DDX_SLN}\" /Build \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\ddx_debug_solo_2010.log")	
-	sh("\"#{DEVENV2010}\" \"#{VS2010_SCRIBBLE_SLN}\" /Build \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\scribble_debug_solo_2010.log")	
+	projects.each do |name, project|    	
+		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Build \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")			
+	end		
 end
 
-task :clean_release => [:clean_release_solo]
+task :clean => [:clean_release_solo]
 
-task :clean_release_solo => [:setup] do
-  puts("Cleaning VS2010 Release SDK...")
-  sh("\"#{DEVENV2010}\" \"#{VS2010_DDX_SLN}\" /Clean \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\ddx_debug_solo_2010.log")	
-  sh("\"#{DEVENV2010}\" \"#{VS2010_SCRIBBLE_SLN}\" /Clean \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\scribble_debug_solo_2010.log")	
+task :clean_release_solo => [:setup] do  
+	projects.each do |name, project|    	
+  		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Clean \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")
+  	end
 end
