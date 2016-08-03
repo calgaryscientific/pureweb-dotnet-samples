@@ -87,8 +87,7 @@ namespace DDxServiceCs
             // Register PW Handlers
             m_stateManager.CommandManager.AddUiHandler("TakeOwnership", OnTakeOwnership);
             m_stateManager.CommandManager.AddUiHandler("SetProperty", OnSetProperty);
-            m_stateManager.CommandManager.AddUiHandler("Echo", OnEcho);
-            m_stateManager.CommandManager.AddIoHandler("TestMerge", OnTestMerge);
+            m_stateManager.CommandManager.AddUiHandler("Echo", OnEcho);            
             m_stateManager.CommandManager.AddUiHandler("RotateDDxViewBkColors", OnRotateDDxViewBkColors);
             m_stateManager.CommandManager.AddUiHandler("SessionStorageBroadcast", OnSessionStorageBroadcast);
             m_stateManager.CommandManager.AddUiHandler("AttachStorageListener", OnAttachStorageListener);
@@ -112,36 +111,6 @@ namespace DDxServiceCs
             StateManager.PluginManager.RegisterPlugin("DDxPingResponder", m_pingResponder);
         }
 
-        /// <summary>
-        /// Perform a timing test on merging large application state.
-        /// </summary>
-        /// <param name="sessionid"></param>
-        /// <param name="command"></param>
-        /// <param name="responses"></param>
-        private void OnTestMerge(Guid sessionid, XElement command, XElement responses)
-        {
-            var root = new XElement("Root");
-            var a = new XElement("A");
-            a.SetOrderedChildName("B");
-            root.Add(a);
-
-            var diffScript = new XElement("DiffScript");
-            diffScript.SetOrderedChildName("Diff");
-
-            int count = command.GetTextAs("Count", 3000);
-            for (int i = 0; i < count; i++)
-            {
-                var nodeStr = string.Format("<Diff><Type>Inserted</Type><Path>/A/#{0}</Path><Value /></Diff>", i);
-                var node = XElement.Parse(nodeStr);
-                diffScript.Add(node);
-            }
-
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            XmlDifference.MergeInPlace(root, diffScript, null);
-            m_stateManager.XmlStateManager.SetValue("/OnTestMerge", sw.ElapsedMilliseconds);
-        }
-
         private void OnTakeOwnership(Guid sessionId, XElement command, XElement responses)
         {
             CollaborationManager.Instance.OwnerSession = sessionId;
@@ -162,7 +131,6 @@ namespace DDxServiceCs
             m_stateManager.CommandManager.RemoveUiHandler("TakeOwnership");
             m_stateManager.CommandManager.RemoveUiHandler("SetProperty");
             m_stateManager.CommandManager.RemoveUiHandler("Echo");
-            m_stateManager.CommandManager.RemoveUiHandler("TestMerge");
             m_stateManager.CommandManager.RemoveUiHandler("RotateDDxViewBkColors");
             m_stateManager.CommandManager.RemoveUiHandler("SessionStorageBroadcast");
             m_stateManager.CommandManager.RemoveUiHandler("AttachStorageListener");
