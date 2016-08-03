@@ -44,7 +44,7 @@ task :upload_to_s3 do
 
 	projects.each do |name, project|    	   
 	    puts ("Attempting to uploading #{project[0]} to AWS S3")
-		filename = "#{ARCHIVE_PREFIX}-#{name}"
+		filename = "#{ARCHIVE_PREFIX}#{name}"
 		puts "looking for #{PUREWEB_HOME}/../pkg/#{filename}.zip"
 	    if File.exists?("#{PUREWEB_HOME}/../pkg/#{filename}.zip")
 	        #upload to the versioned directory
