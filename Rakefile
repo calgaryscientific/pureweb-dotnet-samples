@@ -17,10 +17,10 @@ task :package do
 	end
 
 	projects.each do |name, project|
-		archiveName = "#{ARCHIVE_PREFIX}-#{name}"	
-		if !Dir.glob("#{PUREWEB_HOME}/apps/#{project}/").empty?
-            archive = OS.windows? ? "\"#{CSI_LIB}\\Tools\\7zip\\7z.exe\" a -tzip #{PUREWEB_HOME}\\..\\pkg\\#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project}/*" :
-                "zip -rj #{PUREWEB_HOME}/../pkg/#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project}/"
+		archiveName = "#{ARCHIVE_PREFIX}#{name}"	
+		if !Dir.glob("#{PUREWEB_HOME}/apps/#{project[0]}/").empty?
+            archive = OS.windows? ? "\"#{CSI_LIB}\\Tools\\7zip\\7z.exe\" a -tzip #{PUREWEB_HOME}\\..\\pkg\\#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project[0]}/*" :
+                "zip -rj #{PUREWEB_HOME}/../pkg/#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project[0]}/"
 			sh(archive)
 	    end
 	end				
@@ -28,7 +28,7 @@ end
 
 task :packageclean do
 	projects.each do |name, project|
-		archiveName = "#{ARCHIVE_PREFIX}-#{name}"	
+		archiveName = "#{ARCHIVE_PREFIX}#{name}"	
 		if File.exists?("#{PUREWEB_HOME}/../pkg/#{archiveName}.zip")
 			puts "deleting #{PUREWEB_HOME}/../pkg/#{archiveName}.zip"
 			File.delete "#{PUREWEB_HOME}/../pkg/#{archiveName}.zip"
@@ -43,7 +43,7 @@ task :upload_to_s3 do
 	version = repo_source_description['version']    
 
 	projects.each do |name, project|    	   
-	    puts ("Attempting to uploading #{project} to AWS S3")
+	    puts ("Attempting to uploading #{project[0]} to AWS S3")
 		filename = "#{ARCHIVE_PREFIX}-#{name}"
 		puts "looking for #{PUREWEB_HOME}/../pkg/#{filename}.zip"
 	    if File.exists?("#{PUREWEB_HOME}/../pkg/#{filename}.zip")
@@ -103,10 +103,11 @@ task :test do |t|
 	#Noop
 end
 
-# Does not clean everything - must blow away manually
-desc "Clean All .net Libraries"
+desc "Clean Everything"
 task :clean,[:variant]  do |t, args|
 	t.invoke_in_scope('clean_release_solo')
+	t.invoke_in_scope('stageclean')
+	t.invoke_in_scope('packageclean')	
     clean_debris
 end
 
@@ -114,7 +115,7 @@ task :build => [:build_release_solo]
 
 task :build_release_solo => [:setup] do	
 	projects.each do |name, project|    	
-		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Build \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")			
+		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Build \"Release|Any CPU\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")			
 	end		
 end
 
@@ -122,6 +123,6 @@ task :clean => [:clean_release_solo]
 
 task :clean_release_solo => [:setup] do  
 	projects.each do |name, project|    	
-  		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Clean \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")
+  		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Clean \"Release|Any CPU\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")
   	end
 end
