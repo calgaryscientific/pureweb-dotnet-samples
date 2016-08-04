@@ -8,8 +8,8 @@
     <ProjectGuid>{5AFB64D8-28E9-4E0D-8539-BEE4FAADBB14}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DDxService.Cs</RootNamespace>
-    <AssemblyName>DDxService.Cs</AssemblyName>
+    <RootNamespace>DDxServiceCs</RootNamespace>
+    <AssemblyName>DDxServiceCs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

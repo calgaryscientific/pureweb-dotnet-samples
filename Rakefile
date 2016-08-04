@@ -72,7 +72,7 @@ end
 
 #### Task Definintions
 
-desc "Setup the C++ environment"
+desc "Setup the DotNet environment"
 task :setup do	
     fail("CSI_LIB environment variable is not set. .Net build requires it") if !ENV["CSI_LIB"]
 	
