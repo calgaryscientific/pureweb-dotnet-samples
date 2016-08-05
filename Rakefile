@@ -2,7 +2,7 @@ require_relative("../../Rakefile-init")
 
 dir = File.dirname(__FILE__)
 projects = {
-    "DDxService.Cs" => ["./DDxService.Cs", "#{dir}\\DDxService.Cs\\DDxService.Cs.sln"],
+    "DDxService.Cs" => ["./DDxServiceCs", "#{dir}\\DDxService.Cs\\DDxService.Cs.sln"],
     "ScribbleApp" => ["./ScribbleApp", "#{dir}\\ScribbleApp\\ScribbleApp.NET.sln"]
 }
 ARCHIVE_PREFIX = "pureweb-sample-DotNet-service-"	
