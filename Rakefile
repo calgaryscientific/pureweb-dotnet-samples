@@ -2,7 +2,7 @@ require_relative("../../Rakefile-init")
 
 dir = File.dirname(__FILE__)
 projects = {
-    "DDxService.Cs" => ["./DDxServiceCs", "#{dir}\\DDxService.Cs\\DDxService.Cs.sln"],
+    "DDxServiceCs" => ["./DDxServiceCs", "#{dir}\\DDxServiceCs\\DDxServiceCs.sln"],
     "ScribbleApp" => ["./ScribbleApp", "#{dir}\\ScribbleApp\\ScribbleApp.NET.sln"]
 }
 ARCHIVE_PREFIX = "pureweb-sample-DotNet-service-"	
@@ -94,7 +94,7 @@ desc "Stage the .Net Samples into #{PUREWEB_HOME}"
 task :stage => [:build_release_solo]	
 
 task :stageclean do	
-	FileUtils.rm_r PUREWEB_HOME + '/apps/DDxService.Cs', :force => true
+	FileUtils.rm_r PUREWEB_HOME + '/apps/DDxServiceCs', :force => true
 	FileUtils.rm_r PUREWEB_HOME + '/apps/ScribbleApp', :force => true	
 end
 
