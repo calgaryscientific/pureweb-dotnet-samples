@@ -115,7 +115,7 @@ task :build => [:build_release_solo]
 
 task :build_release_solo => [:setup] do	
 	projects.each do |name, project|    	
-		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Build \"Release|Any CPU\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")			
+		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Build \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2010.log")			
 	end		
 end
 
@@ -123,6 +123,6 @@ task :clean => [:clean_release_solo]
 
 task :clean_release_solo => [:setup] do  
 	projects.each do |name, project|    	
-  		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Clean \"Release|Any CPU\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_debug_solo_2010.log")
+  		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Clean \"Release|x64\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2010.log")
   	end
 end
