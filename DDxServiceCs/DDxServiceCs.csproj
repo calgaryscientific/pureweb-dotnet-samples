@@ -93,27 +93,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2010\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PureWeb.Server.Diagnostics">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2010\PureWeb.Server.Diagnostics.dll</HintPath>
-    </Reference>
-    <Reference Include="PureWeb.Server.Image">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2010\PureWeb.Server.Image.dll</HintPath>
-    </Reference>
-    <Reference Include="PureWeb.Server.ImageProcessing.Managed64">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2010\PureWeb.Server.ImageProcessing.Managed64.dll</HintPath>
-    </Reference>
-    <Reference Include="PureWeb.Server.ImageProcessing.Managed64d">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2010\PureWeb.Server.ImageProcessing.Managed64d.dll</HintPath>
-    </Reference>
-    <Reference Include="PureWeb.Server.StateManager">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2010\PureWeb.Server.StateManager.dll</HintPath>
-    </Reference>
-    <Reference Include="PureWeb.Server.Threading">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2010\PureWeb.Server.Threading.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Diagnostics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -2,8 +2,8 @@ require_relative("../../Rakefile-init")
 
 dir = File.dirname(__FILE__)
 projects = {
-    "DDxServiceCs" => ["./DDxServiceCs", "#{dir}\\DDxServiceCs\\DDxServiceCs.sln"],
-    "ScribbleApp" => ["./ScribbleApp", "#{dir}\\ScribbleApp\\ScribbleApp.NET.sln"]
+    "DDxServiceCs" => ["./DDxServiceCs", ".\\DDxServiceCs\\DDxServiceCs.sln".gsub("/","\\")],
+    "ScribbleApp" => ["./ScribbleApp", ".\\ScribbleApp\\ScribbleApp.NET.sln".gsub("/","\\")]
 }
 ARCHIVE_PREFIX = "pureweb-sample-DotNet-service-"	
 
@@ -83,11 +83,11 @@ task :setup do
         FileUtils.rm_rf("#{file}")
     end
 	
-    puts("Checking for Visual Studio 2010...")
-    abort("Can't find a Visual Studio 2010 environment!") if !ENV["VS100COMNTOOLS"]
+    puts("Checking for Visual Studio 2015...")
+    abort("Can't find a Visual Studio 2015 environment!") if !ENV["VS140COMNTOOLS"]
 
    	puts "Checking for devenv..."
-	abort("Can't find valid devenv 2010 environment!") if !File.exists?("#{DEVENV2010}") 
+	abort("Can't find valid devenv 2015 environment!") if !File.exists?("#{DEVENV2015}") 
 end
 
 desc "Stage the .Net Samples into #{PUREWEB_HOME}"
@@ -114,8 +114,8 @@ end
 task :build => [:build_release_solo]
 
 task :build_release_solo => [:setup] do	
-	projects.each do |name, project|    	
-		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Build \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2010.log")			
+	projects.each do |name, project|
+		sh("\"#{DEVENV2015}\" \"#{project[1]}\" /Build \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2015.log")			
 	end		
 end
 
@@ -123,6 +123,6 @@ task :clean => [:clean_release_solo]
 
 task :clean_release_solo => [:setup] do  
 	projects.each do |name, project|    	
-  		sh("\"#{DEVENV2010}\" \"#{project[1]}\" /Clean \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2010.log")
+  		sh("\"#{DEVENV2015}\" \"#{project[1]}\" /Clean \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2015.log")
   	end
 end
