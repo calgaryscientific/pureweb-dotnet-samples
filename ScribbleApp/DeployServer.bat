@@ -7,10 +7,13 @@ md "%PUREWEB_HOME%\apps\%1"
 
 :deploy
 echo "Sending application files to  %PUREWEB_HOME%\apps\%1..." 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.dll" "%PUREWEB_HOME%\apps\%1" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.pdb" "%PUREWEB_HOME%\apps\%1" 
 xcopy /YFDI %3\* "%PUREWEB_HOME%\apps\%1"
 
-@REM copy x264 libs to $(TargetDir) to enable debugging x264 encoding
-xcopy /YFDI "%PUREWEB_LIBS%\C++\VS2010\lib\libx264*.dll" "%PUREWEB_HOME%\apps\%1"
+@REM copy libs to $(TargetDir) to enable debugging in Visual Studio
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.dll" "%3" 
+xcopy /YFDI "%PUREWEB_LIBS%\C++\%4\lib\*.pdb" "%3" 
 
 SET targetDir=###%2%###
 SET targetDir=%targetDir:"###=%
