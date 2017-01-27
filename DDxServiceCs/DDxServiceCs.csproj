@@ -14,6 +14,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -93,9 +93,24 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\build\stage\sdk\Libs\DotNet\VS2015\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PureWeb.Server.Diagnostics">
       <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="PureWeb.Server.Image">
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Image.dll</HintPath>
+    </Reference>
+    <Reference Include="PureWeb.Server.ImageProcessing.Managed64">
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.ImageProcessing.Managed64.dll</HintPath>
+    </Reference>
+    <Reference Include="PureWeb.Server.StateManager">
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.StateManager.dll</HintPath>
+    </Reference>
+    <Reference Include="PureWeb.Server.Threading">
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
