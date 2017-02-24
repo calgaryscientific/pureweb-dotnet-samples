@@ -81,7 +81,7 @@ namespace DDxServiceCs
             }
 
             tcb = TimerCallback;
-            m_threadTimer = new Timer(tcb, null, 50, 50); // approx 20 fps
+            m_threadTimer = new Timer(tcb, null, 15, 15); // approx 60 fps
         }
 
         private void OnScreenshotRequested(Guid sessionid, XElement command, XElement responses)
