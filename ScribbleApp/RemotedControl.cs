@@ -87,6 +87,11 @@ namespace ScribbleApp
             return this.ClientSize;
         }
 
+        public bool RequiresRender()
+        {
+            return false;
+        }
+
         public virtual void RenderView(RenderTarget target)
         {
             var image = target.Image;
