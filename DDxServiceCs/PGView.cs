@@ -261,6 +261,11 @@ namespace DDxServiceCs
             }
         }
 
+        public bool RequiresRender()
+        {
+            return false;
+        }
+
         bool GenerateImages(Size imageSize, out Image image)
         {
             image = null;

@@ -42,6 +42,11 @@ namespace DDxServiceCs
             return m_clientSize; 
         }
 
+        public bool RequiresRender()
+        {
+            return false;
+        }
+
         public virtual void RenderView(RenderTarget target)
         {
                 var image = target.Image;
