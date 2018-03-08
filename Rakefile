@@ -126,3 +126,8 @@ task :clean_release_solo => [:setup] do
   		sh("\"#{DEVENV2015}\" \"#{project[1]}\" /Clean \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2015.log")
   	end
 end
+
+task :stageTomcat do
+    FileUtils.cp dir + "/DDxServiceCs/tomcat/DDxCs-plugin.xml", PUREWEB_HOME + "/tomcat-server/conf"
+    FileUtils.cp dir + "/ScribbleApp/tomcat/ScribbleCs-plugin.xml", PUREWEB_HOME + "/tomcat-server/conf"
+end
