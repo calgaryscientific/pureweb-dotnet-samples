@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    
+    <bean id="licenseManager" class="pureweb.process.DefaultLicenseManager"/>
+    
+    <bean class="pureweb.process.SocketProcessFactory">
+        <property name="useFullDuplex" value="true"/>
+        <property name="connectionBarrier" ref="applicationConnectionBarrier"/>
+        <property name="applicationRegistry" ref="applicationRegistry" />
+        <property name="licenseManager" ref="licenseManager"/>
+        <property name="application" value="ScribbleApp"/>
+        <property name="description" value="ScribbleApp .NET"/>
+        <property name="executable" value="${PUREWEB_HOME}/apps/ScribbleApp/ScribbleApp.exe"/>
+    </bean>
+    
+    <bean class="pureweb.cluster.SupportedClients" scope="prototype" id="supportedClients">
+        <property name="supportedClients" ref="supportedClientsMap"/>
+        <property name="application" value="ScribbleApp"/>
+        <property name="clientMap">
+            <map>
+              <entry key="ios" value=""/>
+              <entry key="android" value=""/>
+              <entry key="html5" value="ScribbleApp.html"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- Adds the link under the Apps section of the PureWeb Web Application -->
+    <bean class="pureweb.process.PluginLink">
+        <property name="registry" ref="pluginLinkRegistry"/>
+        <property name="supportedClients" ref="supportedClients"/>
+        <property name="name" value="Scribble App C#"/>
+        <property name="description" value="A C# implementation of Scribble App"/>
+        
+        <!-- Optional. If specified the link generated will be as below. Otherwise all client links will be generated dynamically. -->
+        <!-- <property name="path" value="/pureweb/view?name=ScribbleApp&amp;client=html5"/> -->
+        
+        <property name="image" value="/themes/pureweb/default.png"/>
+        <property name="role" value="ROLE_PUREWEB_USER"/>
+    </bean>
+</beans>
