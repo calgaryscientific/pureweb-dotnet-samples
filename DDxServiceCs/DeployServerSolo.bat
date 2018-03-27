@@ -7,7 +7,7 @@ md "%PUREWEB_HOME%\apps\%1"
 
 :deploy
 echo "Sending application files to  %PUREWEB_HOME%\apps\%1..."
-xcopy /YFDI "%PUREWEB_LIBS%\DotNet\VS2015\*.dll" "%PUREWEB_HOME%\apps\%1" 
-xcopy /YFDI "%PUREWEB_LIBS%\DotNet\VS2015\*.pdb" "%PUREWEB_HOME%\apps\%1"  
+xcopy /YFDI "%PUREWEB_LIBS%\DotNet\%4\*.dll" "%PUREWEB_HOME%\apps\%1" 
+xcopy /YFDI "%PUREWEB_LIBS%\DotNet\%4\*.pdb" "%PUREWEB_HOME%\apps\%1"  
 xcopy /YFDI %3\%1.exe "%PUREWEB_HOME%\apps\%1"
 xcopy /YFDI %2\service.json "%PUREWEB_HOME%\apps\%1"

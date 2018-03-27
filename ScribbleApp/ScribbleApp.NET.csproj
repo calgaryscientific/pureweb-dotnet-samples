@@ -184,6 +184,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)" VS2015</PostBuildEvent>
   </PropertyGroup>
 </Project>
