@@ -92,11 +92,11 @@ task :setup do
         FileUtils.rm_rf("#{file}")
     end
 	
-    puts("Checking for Visual Studio 2015...")
-    abort("Can't find a Visual Studio 2015 environment!") if !ENV["VS140COMNTOOLS"]
+    puts("Checking for Visual Studio 2017...")
+    abort("Can't find a Visual Studio 2017 environment!") if !ENV["VS150COMNTOOLS"]
 
    	puts "Checking for devenv..."
-	abort("Can't find valid devenv 2015 environment!") if !File.exists?("#{DEVENV2015}") 
+	abort("Can't find valid devenv 2017 environment!") if !File.exists?("#{DEVENV2017}") 
 end
 
 desc "Stage the .Net Samples into #{PUREWEB_HOME}"
@@ -124,7 +124,7 @@ task :build => [:build_release_solo]
 
 task :build_release_solo => [:setup] do	
 	projects.each do |name, project|
-		sh("\"#{DEVENV2015}\" \"#{project[1]}\" /Build \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2015.log")			
+		sh("\"#{DEVENV2017}\" \"#{project[1]}\" /Build \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2017.log")			
 	end		
 end
 
@@ -132,7 +132,7 @@ task :clean => [:clean_release_solo]
 
 task :clean_release_solo => [:setup] do  
 	projects.each do |name, project|    	
-  		sh("\"#{DEVENV2015}\" \"#{project[1]}\" /Clean \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2015.log")
+  		sh("\"#{DEVENV2017}\" \"#{project[1]}\" /Clean \"Release|Any Cpu\" /Out #{BUILD_DIR.gsub("/","\\")}\\logs\\#{name}_solo_2017.log")
   	end
 end
 
