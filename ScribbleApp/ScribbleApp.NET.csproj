@@ -77,22 +77,22 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="PureWeb.Server.Diagnostics, Version=4.1.3.0, Culture=neutral, PublicKeyToken=0055e654c570d303, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Diagnostics.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.Diagnostics.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.Image, Version=4.1.3.0, Culture=neutral, PublicKeyToken=0055e654c570d303, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Image.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.Image.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.ImageProcessing.Managed64">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.ImageProcessing.Managed64.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.ImageProcessing.Managed64.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.StateManager, Version=4.1.3.0, Culture=neutral, PublicKeyToken=0055e654c570d303, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.StateManager.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.StateManager.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.Threading, Version=4.1.3.0, Culture=neutral, PublicKeyToken=0055e654c570d303, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Threading.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -184,6 +184,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)" VS2015</PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)" VS2017</PostBuildEvent>
   </PropertyGroup>
 </Project>
