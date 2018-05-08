@@ -94,23 +94,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\build\stage\sdk\Libs\DotNet\VS2015\log4net.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PureWeb.Server.Diagnostics">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Diagnostics.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.Diagnostics.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.Image">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Image.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.Image.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.ImageProcessing.Managed64">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.ImageProcessing.Managed64.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.ImageProcessing.Managed64.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.StateManager">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.StateManager.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.StateManager.dll</HintPath>
     </Reference>
     <Reference Include="PureWeb.Server.Threading">
-      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2015\PureWeb.Server.Threading.dll</HintPath>
+      <HintPath>$(PUREWEB_HOME)\sdk\Libs\DotNet\VS2017\PureWeb.Server.Threading.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -159,7 +160,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)" VS2015</PostBuildEvent>
+    <PostBuildEvent>"$(ProjectDir)\DeployServerSolo.bat" "$(TargetName)" "$(ProjectDir)" "$(TargetDir)" VS2017</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
