@@ -23,7 +23,6 @@
         <property name="clientMap">
             <map>
               <entry key="ios" value=""/>
-              <entry key="android" value=""/>
               <entry key="html5" value="ScribbleApp.html"/>
             </map>
         </property>
