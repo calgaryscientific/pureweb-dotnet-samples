@@ -2,8 +2,8 @@ require_relative("../../Rakefile-init")
 
 dir = File.dirname(__FILE__)
 projects = {
-    "DDxServiceCs" => ["./DDxServiceCs", ".\\DDxServiceCs\\DDxServiceCs.sln".gsub("/","\\")],
-    "ScribbleApp" => ["./ScribbleApp", ".\\ScribbleApp\\ScribbleApp.NET.sln".gsub("/","\\")]
+    "DDxCs" => ["./DDxServiceCs", ".\\DDxServiceCs\\DDxServiceCs.sln".gsub("/","\\")],
+    "ScribbleCs" => ["./ScribbleApp", ".\\ScribbleApp\\ScribbleApp.NET.sln".gsub("/","\\")]
 }
 ARCHIVE_PREFIX = "pureweb-sample-DotNet-service-"	
 
@@ -16,7 +16,21 @@ task :package do
 		FileUtils.mkdir "#{PUREWEB_HOME}/../pkg"
 	end
 
+	# Write manifest
+	hash = `git rev-parse --short HEAD`	
+	branch = `git rev-parse --abbrev-ref HEAD`
+	date = Time.now.strftime("%m-%d-%Y")
+
 	projects.each do |name, project|
+
+		File.open("#{PUREWEB_HOME}/apps/#{project[0]}/VERSION", 'w') do |file|
+			file.write("Git Hash: #{hash}")
+			file.write("Git Branch: #{branch}")
+			file.write("Build Date: #{date}")
+			file.write("\n\nLast commit: ")						
+			file.write(`git log --pretty=oneline -n1`)
+		end
+
 		archiveName = "#{ARCHIVE_PREFIX}#{name}"	
 		if !Dir.glob("#{PUREWEB_HOME}/apps/#{project[0]}/").empty?
             archive = OS.windows? ? "\"#{CSI_LIB}\\Tools\\7zip\\7z.exe\" a -tzip #{PUREWEB_HOME}\\..\\pkg\\#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project[0]}" :
@@ -56,10 +70,7 @@ task :upload_to_s3 do
 	        	sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://base.pureweb-apps/branches/#{branch}/#{name}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip --region us-west-2")
 			else
 	        	#upload to the versioned directory
-	        	sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://base.pureweb-apps/releases/#{name}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip --region us-west-2")
-
-	        	#given that this should only ever be run from a build machine, we can assume that this build also represents the 'latest' build
-	        	sh("aws s3 cp s3://base.pureweb-apps/releases/#{name}/#{version}/#{repo_source_description}/#{BUILD_OS}/#{filename}.zip s3://base.pureweb-apps/releases/#{name}/latest/#{BUILD_OS}/#{filename}.zip --region us-west-2")
+	        	sh("aws s3 cp #{PUREWEB_HOME}/../pkg/#{filename}.zip s3://base.pureweb-apps/#{name}/#{BUILD_OS}/#{name}.zip --region us-west-2")
 	    	end
 	    else
 	        puts("No file found.  Skipping upload.")
