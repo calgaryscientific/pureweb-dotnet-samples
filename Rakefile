@@ -19,6 +19,7 @@ task :package do
 	projects.each do |name, project|
 		archiveName = "#{ARCHIVE_PREFIX}#{name}"	
 		if !Dir.glob("#{PUREWEB_HOME}/apps/#{project[0]}/").empty?
+			FileUtils.rm Dir.glob("#{PUREWEB_HOME}/apps/#{project[0]}/*.pdb")
             archive = OS.windows? ? "\"#{CSI_LIB}\\Tools\\7zip\\7z.exe\" a -tzip #{PUREWEB_HOME}\\..\\pkg\\#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project[0]}" :
                 "zip -rj #{PUREWEB_HOME}/../pkg/#{archiveName}.zip #{PUREWEB_HOME}/apps/#{project[0]}/"
 			sh(archive)
