@@ -71,6 +71,7 @@ namespace DDxServiceCs
             StateManager.Instance.XmlStateManager.AddValueChangedHandler(DDx._DDx_SHOWMOUSEPOS, OnShowMousePosChanged);
             StateManager.Instance.ViewManager.ViewRendered += OnViewRendered;
             StateManager.Instance.CommandManager.AddUiHandler("Screenshot", OnScreenshotRequested);
+            StateManager.Instance.CommandManager.AddIoHandler("LongString", OnExecuteLongString);
 
             using (XmlStateLock state = StateManager.Instance.LockAppState())
             {
@@ -82,6 +83,31 @@ namespace DDxServiceCs
 
             tcb = TimerCallback;
             m_threadTimer = new Timer(tcb, null, 15, 15); // approx 60 fps
+        }
+
+        private void OnExecuteLongString(Guid sessionId, XElement command, XElement responses)
+        {
+            var reps = command.GetTextAs<int>("Repetitions");
+            var substr = command.Element("SubString").GetText();
+            var longStr = command.Element("LongString").GetText();
+
+            int repsReceived = 0;
+
+            for (int i = 0; i < longStr.Length; i += substr.Length)
+            {
+                for (int j = 0; j < substr.Length; j++)
+                {
+                    if (longStr[i + j] != substr[j])
+                    {
+                        Logger.DebugFormat("Expected character {0} at position {1} but found character {2}", substr[j], i + j, longStr[i + j]);
+                        return;
+                    }
+                }
+
+                repsReceived++;
+            }
+
+            Logger.DebugFormat("Expected {0} substring repititions, received {1}", reps, repsReceived);
         }
 
         private void OnScreenshotRequested(Guid sessionid, XElement command, XElement responses)
