@@ -1,7 +1,7 @@
 pureweb-DotNet-samples
 =====================
 
-TThe following notes outline what I did to get the .NET samples built from the command line and running without the PureWeb Gravity environment. The notes below are Windows only.
+The following notes outline what I did to get the .NET samples built from the command line and running without the PureWeb Gravity environment. The notes below are Windows only.
 
 1. Downloaded Tomcat server zip artifact from Bamboo and unzip to c:\temp\PureWeb\tomcat-server.
 
