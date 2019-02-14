@@ -70,7 +70,8 @@ namespace ScribbleApp
             if (Program.StateManager != null)
             {
                 this.RemoteRenderer = Program.StateManager.ViewManager;
-                Program.StateManager.ViewManager.RegisterView(this.ViewName, this);
+                var vo = new PureWeb.Server.ViewRegistrationOptions(true, true);
+                Program.StateManager.ViewManager.RegisterView(this.ViewName, this, vo);
                 Program.StateManager.XmlStateManager.AddValueChangedHandler("ScribbleColor", OnScribbleColorChanged);
                 Program.StateManager.CommandManager.AddUiHandler("Clear", OnExecuteClear);
                 m_isRegistered = true;
