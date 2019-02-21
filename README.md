@@ -1,48 +1,22 @@
-pureweb-DotNet-samples
+PureWeb sample .Net services
 =====================
 
-The following notes outline what I did to get the .NET samples built from the command line and running without the PureWeb Gravity environment. The notes below are Windows only.
+This repository contains sample .Net services created using the PureWeb software development kit (SDK). The PureWeb SDK combines remote visualization, interactive 3D, and synchronous distributed collaboration technologies, bringing the power of highly sophisticated graphics applications to the mobile world. More information on the SDK is available on our [developer site](https://www.pureweb.io/).
 
-1. Downloaded Tomcat server zip artifact from Bamboo and unzip to c:\temp\PureWeb\tomcat-server.
+The SDK provides APIs for developers to create their own applications, and the samples in this repository are intended both as a learning tool and a quick start point. They are simple yet functional applications that illustrate all the key fundamentals of the APIs. There are two samples available:
+* Scribble: a simple canvas which allows users to draw, change pen color, and erase drawings; the collaboration feature enables multiple users to interact simultaneously with the canvas. Scribble is our main sample application, and the one that we recommend for developers who are new to the SDK.
+* DDx: a web interface used internally by the PureWeb development team to exercise and test the features of the APIs. You may find this sample code useful as additional examples of the API’s core methods. Note, however, that we do not provide specific instructions on how to build and deploy the DDx client.
 
-2. Downloaded .NET SDK zip artifact from Bamboo and unzip to c:\temp\PureWeb\sdk\Libs\DotNet
+There are three main components to solutions built using the PureWeb SDK, and you must install all three in order to have a working application:
+* a service application that handles all the heavy computation, data processing and image rendering (such as the sample services in this repository); service applications can reside on a remote server
+* a client interface that resides on end user devices, such as the ones in the repository for the [HTML5 sample clients](https://github.com/calgaryscientific/pureweb-html5-samples)
+* the PureWeb server, a middle-tier layer based on Tomcat technology, for which you must obtain a license. You can obtain a free trial license by contacting our support team at support@pureweb.com
 
-3. Clone .NET samples repository to c:\temp\PureWeb\samples\DotNet
+Because of the interdependency of these components, they must be installed together, in a particular order that allows the creation of the required directory structure. For complete instructions, refer to the [PureWeb documentation](http://docs.pureweb.io/sdk5.0/content/setup/installation.html).
 
-4. The expanded directory structure should mimic the PureWeb Gravity setup:
-    
-   C:\temp\PureWeb\samples\DotNet\DDxServiceCs
-   C:\temp\PureWeb\samples\DotNet\ScribbleApp
-   C:\temp\PureWeb\sdk\Libs\DotNet\VS2017
-   C:\temp\PureWeb\tomcat-server\conf
-   C:\temp\PureWeb\tomcat-server\docs
-   C:\temp\PureWeb\tomcat-server\etc
-   C:\temp\PureWeb\tomcat-server\tomcat
-   C:\temp\PureWeb\tomcat-server\webapp
+Note that the rake files in this repository will not function correctly and should not be used to build the samples.
 
-5. Set environment variables:
-   
-   set PUREWEB_LIBS=c:\temp\PureWeb\sdk\Libs
-   set PUREWEB_HOME=c:\temp\PureWeb
-   
-6. Start Visual Studio 2017, openC:\temp\PureWeb\samples\DotNet\ScribbleApp\ScribbleApp2017.sln, and build the solution.
+The samples are provided under the Apache 2 license; see the LICENSE file at the root of this repository for the full text.
 
-7. Open C:\temp\PureWeb\samples\DotNet\DDxServiceCs\DDxService2017.sln in Visual Studio and build the solution.
 
-8. Deploy the samples to Tomcat by copying the plugin XML files as follows:
-
-   C:\temp\PureWeb\samples\DotNet\ScribbleApp\tomcat\ScribbleCs-plugin.xml -> PureWeb\tomcat-server\conf
-   C:\temp\PureWeb\samples\DotNet\DDxServiceCs\tomcat\DDxCs-plugin.xml -> PureWeb\tomcat-server\conf
-
-7. To run Tomcat and test the samples:
-
-   a. a PureWeb license file is required and in must be placed in c:\temp\PureWeb\tomcat-server\conf
-   b. Build the HTML5 samples and deploy to Tomcat (see README for the HTML5 samples repo for instructions)
-   c. cd c:\temp\PureWeb\tomcat-server\tomcat\bin
-   d. catalina run
-   e. Go to the apps page and run either Scribble or DDx
-
-Note - I encountered some very odd behavior by Visual Studio after resetting the environment variables as above. Even though the new values were properly reported in Visual Studio System Info, the post-build step that calls the batch file to copy the executable and DLLs to c:\temp\PureWeb\apps was not picking up the updated value of PUREWEB_HOME but rather using the previous value pointing to my PureWeb Gravity dev environment. I am at a loss to explain this very odd behavior.
-
-Note also, that the rakefiles used by Gravity to build the .NET samples are present, but will not function correctly because they rely on PureWeb Gravity as the ambient environment.
 
